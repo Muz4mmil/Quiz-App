@@ -38,7 +38,7 @@ const questionSet = [
 ]
 
 const questionElement = document.querySelector(".question");
-const ansBtns = document.querySelector(".btns");
+const Btns = document.querySelector(".btns");
 const nextBtn = document.querySelector(".nextBtn");
 
 let currentQIndex = 0;
@@ -51,3 +51,40 @@ function start(){
 
     showQuestion();
 }
+
+function showQuestion(){
+    resetState();
+    let currentQ = questionSet[currentQIndex];
+    let QNo = currentQIndex + 1;
+    questionElement.innerHTML = QNo +". "+ currentQ.question;
+
+    currentQ.options.forEach(option =>{
+        const btn = document.createElement("button");
+        btn.innerHTML = option.text;
+        btn.classList.add("ansBtn");
+        Btns.appendChild(btn);
+        if(option.correct){
+            btn.dataset.correct = option.correct;
+        }
+        btn.addEventListener("click", selectAnswer)
+    })
+}
+
+function resetState(){
+    while(Btns.firstChild){
+        Btns.removeChild(Btns.firstChild);
+    }
+}
+
+function selectAnswer(e){
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if (isCorrect) {
+        selectedBtn.classList.add("correct");
+    }else{
+        selectedBtn.classList.add("incorrect");
+    }
+}
+
+start();
+
