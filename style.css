@@ -54,11 +54,12 @@ body{
     font-size: 16px;
     border: 1px solid lightgray;
     cursor: pointer;
+    color: black;
 }
 
-/* .ansBtn:hover{
+.ansBtn:hover:not([disabled]){
     background-color: rgba(211, 211, 211, 0.3);
-} */
+}
 
 .nextBtn{
     float: right;
@@ -76,4 +77,25 @@ body{
 }
 .incorrect{
     background: #ff9393;
+}
+
+.btns img{
+    height: 200px;
+    width: 200px;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.credit{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    font-size: 14px ;
+    font-weight: bold;
+}
+.credit a{
+    color: rgb(61, 61, 61);
 }

@@ -1,38 +1,47 @@
 const questionSet = [
     {
-        question: "Question 1",
+        question: "Which programming language is primarily used for developing Android applications?",
         options: [
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: true}
+            { text: "Java", correct: true},
+            { text: "Python", correct: false},
+            { text: "C#", correct: false},
+            { text: "Swift", correct: false}
         ]
     },
     {
-        question: "Question 2",
+        question: "What does HTML stand for in web development?",
         options: [
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: true}
+            { text: "Hyperlink and Text Markup Language", correct: false},
+            { text: "Hypertext Markup Language", correct: true},
+            { text: "Hyper Transfer Markup Language", correct: false},
+            { text: "High-Tech Markup Language", correct: false}
         ]
     },
     {
-        question: "Question 3",
+        question: "What is the maximum transmission speed of USB 3.0?",
         options: [
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: true}
+            { text: "480 Mbps", correct: false},
+            { text: "1 Gbps", correct: false},
+            { text: "5 Gbps", correct: true},
+            { text: "10 Gbps", correct: false}
         ]
     },
     {
-        question: "Question 4",
+        question: "What does VPN stand for?",
         options: [
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: false},
-            { text: "Answer1", correct: true}
+            { text: "Virtual Private Network", correct: true},
+            { text: "Virtual Public Network", correct: false},
+            { text: "Virtual Personal Network", correct: false},
+            { text: "Visible Private Network", correct: false}
+        ]
+    },
+    {
+        question: "What is the default port number for HTTP connections?",
+        options: [
+            { text: "80", correct: true},
+            { text: "443", correct: false},
+            { text: "8080", correct: false},
+            { text: "22", correct: false}
         ]
     },
 ]
@@ -68,6 +77,10 @@ function showQuestion(){
         }
         btn.addEventListener("click", selectAnswer)
     })
+
+    if(currentQIndex == questionSet.length-1){
+        nextBtn.innerHTML = "Finish";
+    }
 }
 
 function resetState(){
@@ -81,10 +94,44 @@ function selectAnswer(e){
     const isCorrect = selectedBtn.dataset.correct === "true";
     if (isCorrect) {
         selectedBtn.classList.add("correct");
+        score++;
     }else{
         selectedBtn.classList.add("incorrect");
     }
+    Array.from(Btns.children).forEach(btn =>{
+        if (btn.dataset.correct === "true") {
+            btn.classList.add("correct");
+        }
+        btn.disabled = true;
+    })
 }
+
+function showScore(){
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questionSet.length}`;
+    nextBtn.style.display = "none";
+
+    const scoreImg = document.createElement("img");
+    scoreImg.src = `./scoreImages/${score}.png`
+    Btns.appendChild(scoreImg);
+}
+
+function handleNext(){
+    currentQIndex++;
+    if(currentQIndex < questionSet.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+}
+
+nextBtn.addEventListener("click", ()=>{
+    if(currentQIndex < questionSet.length){
+        handleNext();
+    }else{
+        start();
+    }
+})
 
 start();
 
