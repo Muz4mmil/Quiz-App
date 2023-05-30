@@ -112,7 +112,7 @@ function showScore(){
     nextBtn.style.display = "none";
 
     const scoreImg = document.createElement("img");
-    scoreImg.src = `scoreImages/${score}.PNG`
+    scoreImg.src = `./scoreImages/${score}.PNG`
     Btns.appendChild(scoreImg);
 }
 
